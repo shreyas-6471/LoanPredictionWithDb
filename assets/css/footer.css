@@ -1,0 +1,15 @@
+body{
+  background-color: blanchedalmond;
+}
+
+#s1 {
+  background-color: hotpink;
+  position: relative;
+  top: 600px;
+  width: 100%;
+  height: auto;
+  bottom: 0px; }
+
+#s1-0 {
+  position: absolute;
+  left: 700px; }

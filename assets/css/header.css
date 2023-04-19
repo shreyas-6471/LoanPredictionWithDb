@@ -1,0 +1,17 @@
+#s1 {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: red; }
+
+#s1-0 {
+  position: absolute;
+  left: 50px; }
+
+#s1-1 {
+  position: absolute;
+
+}
+#s1-2 {
+  position: absolute;
+  right: 0px; }

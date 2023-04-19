@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loan Predictor Site</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Loan Predictor</h1>
+    </header>
+    <main>
+        <% if (typeof predictedResult !== 'undefined') { %>
+            <!-- Code to execute if predictedResult is defined -->
+              <p>  <%= predictedResult %> </p>
+        <% } %>
+            <!-- Code to execute if predictedResult is not defined -->
+          
+        <h3></h3>
+      <form action="/model" method="POST">
+        <label for="amount">Current Loan Amount:</label>
+        <input type="number" id="amount" name="amount" step="any" required>
+        <br>
+        <label for="income">Annual Income:</label>
+        <input type="number" id="income" name="income" step="any" required>
+        <br>
+        <label for="debt">Monthly Debt:</label>
+        <input type="number" id="debt" name="debt" step="any" required>
+        <br>
+        <label for="history">Years of Credit History:</label>
+        <input type="number" id="history" name="history" step="any" required>
+        <br>
+        <label for="accounts">Number of Open Accounts:</label>
+        <input type="number" id="accounts" name="accounts" step="any" required>
+        <br>
+        <label for="balance">Current Credit Balance:</label>
+        <input type="number" id="balance" name="balance" step="any" required>
+        <br>
+        <label for="maxcredit">Maximum Open Credit:</label>
+        <input type="number" id="maxcredit" name="maxcredit" step="any" required>
+        <br>
+        <label for="job">Years in current job:</label>
+        <input type="text" id="job" name="job" required>
+        <br>
+        <label for="home">Home Ownership:</label>
+        <input id="home" name="home" required> 
+        <br>
+        <label for="purpose">Purpose:</label>
+        <input id="purpose" name="purpose" required> 
+        <br>
+        <label for="problems">Number of Credit Problems:</label>
+        <input type="number" id="problems" name="problems" step="any" required>
+        <br>
+        <label for="bankruptcies">Bankruptcies:</label>
+        <input type="number" id="bankruptcies" name="bankruptcies" step="any" required>
+        <br>
+        <label for="taxliens">Tax Liens:</label>
+        <input type="number" id="taxliens" name="taxliens" step="any" required>
+        <br>
+        <label for="creditranges">Credit Ranges:</label>
+        <input type="number" id="creditranges" name="creditranges" step="any" required>
+        <br>
+        <button type="submit">Predict Loan</button>
+      </form>
+    </main>
+  </body>
+</html>

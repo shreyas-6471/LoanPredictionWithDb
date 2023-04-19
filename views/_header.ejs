@@ -1,0 +1,24 @@
+
+<header>
+    
+    <div id="s1>">
+    
+    <span id="s1-0"><b>My Codeal App</b></span>
+    
+    <% if(locals.user){ %> 
+    
+         <span id="s1-1"> <%=user.name  %> </span>
+          <a href="/sign_out" id="s1-2">Sign Out</a>
+      
+    
+    <%} else{ %>
+       
+           
+                <a href="/sign_in" id="s1-1" > Sign In</a>
+           
+               <a href="/sign_up" id="s1-2">Sign Up</a>
+           
+    
+    <% } %>  
+    </div>
+</header>
