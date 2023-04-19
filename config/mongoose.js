@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 mongoose.connect('mongodb://localhost/codial_devlopment');
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
+//mongoose.set('useNewUrlParser', true);
+//mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 const db=mongoose.connection;
