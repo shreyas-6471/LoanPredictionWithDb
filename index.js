@@ -47,7 +47,10 @@ cookie:{
 store: new MongoStore(
     {
         mongooseConnection:db,
-        autoRemove:'disabled'
+        
+        ttl: 60 * 60 * 24, // session TTL (expiration) in seconds
+  autoRemove: 'interval',
+  autoRemoveInterval: 10, // interval in minutes to clear expired sessions
 },
 function(err)
 {
