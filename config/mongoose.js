@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost/loan_prediction');
+mongoose.connect('mongodb+srv://slshreyas4:shreyas98@cluster0.wqau1jg.mongodb.net/?retryWrites=true&w=majority');
 //mongoose.set('useNewUrlParser', true);
 //mongoose.set('useFindAndModify', false);
 //mongoose.set('useCreateIndex', true);
