@@ -3,6 +3,7 @@
 //const User=require('../models/user');
 const { PythonShell } = require('python-shell');
 //const tf = require('@tensorflow/tfjs-node');
+const customer=require('../models/customer');
 module.exports.homefn=function(req,res)
 {
    
@@ -88,11 +89,36 @@ module.exports.modelPredict = function(req, res) {
         else{
             restosend="The customer's loan will mostly be charged-off."
         }
+
         console.log('From controller',restosend)
-        return res.render('home', { 
-            title:'Loan Prediction Application',
-            predictedResult:restosend 
+        let new_customer=new customer({
+            amount:req.body.amount ,
+            income: req.body.income,
+            debt: req.body.debt,
+            history: req.body.history ,
+            accounts: req.body.accounts,
+            balance:req.body.balance,
+            maxcredit: req.body.maxcredit,
+            job: req.body.job ,
+            home: req.body.home,
+            purpose: req.body.purpose,
+            problems:req.body.problems ,
+            bankruptcies: req.body.bankruptcies,
+            taxliens: req.body.taxliens,
+            creditranges: req.body.creditranges,
+            predictedloanstatus:result,
         });
+        new_customer.save().then((customer)=>{
+            console.log('pushed data successfully to db!');
+            return res.render('home', { 
+                title:'Loan Prediction Application',
+                predictedResult:restosend 
+            });
+        })
+        .catch((err)=>{
+            console.log('Problem while pushing data to db!!!');
+            return;
+        })
     });
 };
 
