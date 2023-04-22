@@ -17,6 +17,8 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.3",
     "mongoose": "^7.0.4",
-    "python-shell": "^5.0.0"
+    "multer": "*",
+    "python-shell": "^5.0.0",
+    "xlsx": "^0.18.5"
   }
 }

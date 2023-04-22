@@ -2,8 +2,11 @@
 //const Comment=require('../models/comment');
 //const User=require('../models/user');
 const { PythonShell } = require('python-shell');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Define the destination folder for uploaded files
 //const tf = require('@tensorflow/tfjs-node');
 const customer=require('../models/customer');
+const xlsx = require('xlsx');
 module.exports.homefn=function(req,res)
 {
    
@@ -121,9 +124,61 @@ module.exports.modelPredict = function(req, res) {
         })
     });
 };
+module.exports.uploadsheet = function(req, res) {
+    const storage = multer.diskStorage({
+        destination: function(req, file, cb) {
+          cb(null, 'uploads/');
+        },
+        filename: function(req, file, cb) {
+          cb(null, file.originalname);
+        }
+      });
+      
+      const upload = multer({ storage: storage });
+      
 
+    if (!(req.file)) {
+        return res.status(400).send('No file was uploaded.');
+      }
+    console.log(req.file.filename);
+      // Access the uploaded file
+      const uploadedFile = req.file;
 
+};
 
+module.exports.uploadsheet = function(req, res, next) {
+    const storage = multer.diskStorage({
+        destination: function(req, file, cb) {
+          cb(null, 'uploads/');
+        },
+        filename: function(req, file, cb) {         cb(null, file.originalname);
+        }
+    });
+      
+    const upload = multer({ storage: storage }).single('file');
+
+    upload(req, res, function(err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(400).send(err.message);
+        } else if (err) {
+            return res.status(500).send(err.message);
+        }
+
+        if (!req.file) {
+            return res.status(400).send('No file was uploaded.');
+        }
+
+        console.log(req.file.filename);
+      
+        // Access the uploaded file
+        const uploadedFile = req.file;
+
+        // Do something with the uploaded file
+        // ...
+
+        //return res.status(200).send('File has been uploaded successfully.');
+    });
+};
 
 
 
