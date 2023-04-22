@@ -6,7 +6,8 @@ const XLSX = require('xlsx');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Define the destination folder for uploaded files
 //const tf = require('@tensorflow/tfjs-node');
-const customer=require('../models/customer');
+const Customer=require('../models/customer');
+const mongoose = require('mongoose');
 const xlsx = require('xlsx');
 module.exports.homefn=function(req,res)
 {
@@ -65,6 +66,7 @@ module.exports.modelPredict = function(req, res) {
     ];
     
     let X = [inputValues];      
+    console.log('x vals are',X);
     let pythonProcess = spawn('/usr/bin/python3', ['script.py', JSON.stringify(X)]);
     
     let result = '';
@@ -167,19 +169,19 @@ module.exports.uploadsheet = function(req, res, next) {
         console.log(`Number of rows: ${numRows}`);
         console.log(`Number of columns: ${numCols}`);
         let xvals=[];
-        for(let row=1;row<=numRows;row++)
+        for(let row=0;row<numRows;row++)
         {
            let x=[];
-            for(let col=1;col<=numCols;col++)
+            for(let col=0;col<numCols;col++)
             {
                 let cellValue = worksheet[xlsx.utils.encode_cell({r: row, c: col})];
                // let cellValue = worksheet[row][col].v;
-               console.log('cell val is',cellValue);
+               //console.log('cell val is',cellValue);
                if(cellValue!=undefined){
-                x.push(cellValue.w);
+                x.push(cellValue.v);
                }
             }
-            console.log('x value is',x);
+           // console.log('x value is',x);
             if(x!=[]){
             xvals.push(x);
             }
@@ -199,57 +201,60 @@ module.exports.uploadsheet = function(req, res, next) {
         });
     
         pythonProcess.on('close', (code) => {
-            console.log(`child process exited with code ${code}`);
-            console.log('Predicted result in node is!!!', result);
+           // console.log(`child process exited with code ${code}`);
+            //console.log('Predicted result in node is!!!', result);
             let interres=result.trim();
-            console.log('Trimmed res is',interres);
-            let restosend="";
-    
-            console.log('Float value of result is',parseFloat(result));
-            if(parseFloat(result)===0)
+           // console.log('Trimmed res is',interres);
+           const myarr= result.split(',');
+          // console.log('My array is',myarr);
+            let finalxvals=[];
+            for(let row=0;row<numRows;row++)
             {
-                restosend="The customer is most likely to pay off the loan."
-            }
-            else{
-                restosend="The customer's loan will mostly be charged-off."
-            }
-    
-            /*console.log('From controller',restosend)
-            let new_customer=new customer({
-                amount:req.body.amount ,
-                income: req.body.income,
-                debt: req.body.debt,
-                history: req.body.history ,
-                accounts: req.body.accounts,
-                balance:req.body.balance,
-                maxcredit: req.body.maxcredit,
-                job: req.body.job ,
-                home: req.body.home,
-                purpose: req.body.purpose,
-                problems:req.body.problems ,
-                bankruptcies: req.body.bankruptcies,
-                taxliens: req.body.taxliens,
-                creditranges: req.body.creditranges,
-                predictedloanstatus:result,
-            });
-            new_customer.save().then((customer)=>{
-                console.log('pushed data successfully to db!');
-                return res.render('home', { 
-                    title:'Loan Prediction Application',
-                    predictedResult:restosend 
-                });
-            })
-            .catch((err)=>{
-                console.log('Problem while pushing data to db!!!');
-                return;
-            })*/
-        });
-        // Do something with the uploaded file
-        // ...
+                let xafter=[];
+                for(let col=0;col<numCols;col++)
+                {
+                    let cellValue = worksheet[xlsx.utils.encode_cell({r: row, c: col})];
+                   if(cellValue!=undefined){
+                    xafter.push(cellValue.w);
+                   }
+                }
+                xafter.push(myarr[row]);
+                const dataObject = {
+                    amount:xafter[0] ,
+                    income: xafter[1],
+                    debt: xafter[2],
+                    history: xafter[3],
+                    accounts:xafter[4] ,
+                    balance:xafter[5],
+                    maxcredit:xafter[6] ,
+                    job: xafter[7],
+                    home: xafter[8],
+                    purpose: xafter[9],
+                    problems: xafter[10],
+                    bankruptcies: xafter[11],
+                    taxliens:xafter[12] ,
+                    creditranges:xafter[13] ,
+                    predictedloanstatus:xafter[14]
+                  };
+               finalxvals.push(dataObject);
+               
+                }
+              //  console.log('finalxvals is',finalxvals);
+                finalxvals.forEach(record => {
+                    const newRecord = new Customer(record);
+                    newRecord.save()
+                    .then(() => console.log('Record saved successfully!'))
+                    .catch(err => console.error(err));
 
-        //return res.status(200).send('File has been uploaded successfully.');
-    });
-};
+                  });
+                  return res.redirect('/');
+            });
+    
+        
+        });
+    };
+       
+    
 
 
 
