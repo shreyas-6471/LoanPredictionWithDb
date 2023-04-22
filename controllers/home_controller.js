@@ -2,6 +2,7 @@
 //const Comment=require('../models/comment');
 //const User=require('../models/user');
 const { PythonShell } = require('python-shell');
+const XLSX = require('xlsx');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Define the destination folder for uploaded files
 //const tf = require('@tensorflow/tfjs-node');
@@ -124,27 +125,7 @@ module.exports.modelPredict = function(req, res) {
         })
     });
 };
-module.exports.uploadsheet = function(req, res) {
-    const storage = multer.diskStorage({
-        destination: function(req, file, cb) {
-          cb(null, 'uploads/');
-        },
-        filename: function(req, file, cb) {
-          cb(null, file.originalname);
-        }
-      });
-      
-      const upload = multer({ storage: storage });
-      
 
-    if (!(req.file)) {
-        return res.status(400).send('No file was uploaded.');
-      }
-    console.log(req.file.filename);
-      // Access the uploaded file
-      const uploadedFile = req.file;
-
-};
 
 module.exports.uploadsheet = function(req, res, next) {
     const storage = multer.diskStorage({
@@ -172,7 +153,97 @@ module.exports.uploadsheet = function(req, res, next) {
       
         // Access the uploaded file
         const uploadedFile = req.file;
+        //console.log(__dirname); // prints the current project directory
+        const projectDir = process.cwd();
+        console.log(projectDir); // prints the current project directory
 
+        let path=process.cwd()+'/uploads/'+req.file.filename;
+        const workbook = XLSX.readFile(path);
+        const sheetName = workbook.SheetNames[0]; // get the first sheet in the workbook
+        const worksheet = workbook.Sheets[sheetName];
+        const range = xlsx.utils.decode_range(worksheet['!ref']); // decode the range of cells in the sheet
+        const numRows = range.e.r + 1; // add 1 to get the number of rows
+        const numCols = range.e.c + 1; // add 1 to get the number of columns
+        console.log(`Number of rows: ${numRows}`);
+        console.log(`Number of columns: ${numCols}`);
+        let xvals=[];
+        for(let row=1;row<=numRows;row++)
+        {
+           let x=[];
+            for(let col=1;col<=numCols;col++)
+            {
+                let cellValue = worksheet[xlsx.utils.encode_cell({r: row, c: col})];
+               // let cellValue = worksheet[row][col].v;
+               console.log('cell val is',cellValue);
+               if(cellValue!=undefined){
+                x.push(cellValue.w);
+               }
+            }
+            console.log('x value is',x);
+            if(x!=[]){
+            xvals.push(x);
+            }
+        }
+        console.log('Final xvals are',xvals);
+        let pythonProcess = spawn('/usr/bin/python3', ['script.py', JSON.stringify(xvals)]);
+    
+        let result = '';
+    
+        pythonProcess.stdout.on('data', (data) => {
+            process.stdout.write(data.toString()); 
+            result += data.toString();
+        });
+        
+        pythonProcess.stderr.on('data', (data) => {
+            console.error('Error:', data.toString());
+        });
+    
+        pythonProcess.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+            console.log('Predicted result in node is!!!', result);
+            let interres=result.trim();
+            console.log('Trimmed res is',interres);
+            let restosend="";
+    
+            console.log('Float value of result is',parseFloat(result));
+            if(parseFloat(result)===0)
+            {
+                restosend="The customer is most likely to pay off the loan."
+            }
+            else{
+                restosend="The customer's loan will mostly be charged-off."
+            }
+    
+            /*console.log('From controller',restosend)
+            let new_customer=new customer({
+                amount:req.body.amount ,
+                income: req.body.income,
+                debt: req.body.debt,
+                history: req.body.history ,
+                accounts: req.body.accounts,
+                balance:req.body.balance,
+                maxcredit: req.body.maxcredit,
+                job: req.body.job ,
+                home: req.body.home,
+                purpose: req.body.purpose,
+                problems:req.body.problems ,
+                bankruptcies: req.body.bankruptcies,
+                taxliens: req.body.taxliens,
+                creditranges: req.body.creditranges,
+                predictedloanstatus:result,
+            });
+            new_customer.save().then((customer)=>{
+                console.log('pushed data successfully to db!');
+                return res.render('home', { 
+                    title:'Loan Prediction Application',
+                    predictedResult:restosend 
+                });
+            })
+            .catch((err)=>{
+                console.log('Problem while pushing data to db!!!');
+                return;
+            })*/
+        });
         // Do something with the uploaded file
         // ...
 

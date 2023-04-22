@@ -23,7 +23,8 @@ df = pd.DataFrame(X, columns=columns)
 predicted = model.predict(df)
 #print('Done predicting!! in script')
 # Print the predicted results to stdoutp
-print(str(predicted[0]))
+for i in len(predicted):
+    print(str(predicted[i]))
 
 
 # Flush stdout to ensure the output is immediately available to Node.js
