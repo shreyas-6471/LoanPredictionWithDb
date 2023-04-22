@@ -4,111 +4,108 @@
 	<title>Loan Prediction</title>
 	<link rel="stylesheet" href="basestyle.css">
 	<style>
-		body {
-			background-color: #f5f5f5;
-			font-family: Arial, sans-serif;
-			font-size: 16px;
-			line-height: 1.5;
-			margin: 0;
-			padding: 0;
-		}
-		
-		h1 {
-			text-align: center;
-			margin-top: 50px;
-			color: #333;
-			font-size: 48px;
-			font-weight: bold;
-			text-transform: uppercase;
-			letter-spacing: 5px;
-			margin-bottom: 50px;
-		}
-		
-		.btn-container {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			margin-top: 50px;
-		}
-		
-		a.predict-single, a.predict-multiple {
-			display: inline-block;
-			background-color: #4285F4;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			padding: 20px;
-			margin: 0 10px;
-			font-size: 24px;
-			cursor: pointer;
-			text-decoration: none;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			transition: background-color 0.2s ease-in-out;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-			overflow: hidden;
-			position: relative;
-		}
-		
-		a.predict-single:before, a.predict-multiple:before {
-			content: '';
-			background-color: rgba(255, 255, 255, 6.5);
-			position: absolute;
-			top: 50%;
-			left: -50%;
-			transform: translate(-50%, -50%) rotate(45deg);
-			width: 50%;
-			height: 100%;
-			opacity: 0;
-			transition: all 0.5s ease-in-out;
-			z-index: -1;
-		}
-		
-		a.predict-single:hover:before, a.predict-multiple:hover:before {
-			opacity: 1;
-			left: 120%;
-		}
-		
-		a.predict-single:hover {
-			background-color: #3367D6;
-		}
-		
-		a.predict-multiple:hover {
-			background-color: #34A853;
-		}
-		
-		.btn-container:after {
-			content: '';
-			clear: both;
-			display: table;
-		}
-		
-		.footer {
-			background-color: #333;
-			color: #fff;
-			font-size: 14px;
-			padding: 20px;
-			text-align: center;
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			right: 0;
-		}
-		
-		.footer a {
-			color: #fff;
-			text-decoration: none;
-		}
-		
-		@media only screen and (max-width: 768px) {
-			.btn-container {
-				flex-direction: column;
-			}
-			
-			a.predict-single, a.predict-multiple {
-				margin: 10px 0;
-			}
-		}
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1f1;
+  background: url('pngtree-loan-poster-background-material-image_154549.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 50px;
+  color: #200505;
+  font-size: 48px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 50px;
+}
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+}
+a.predict-single, a.predict-multiple, a.get-all-records {
+  display: inline-block;
+  background-color: #4285F4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 10px;
+  font-size: 24px;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background-color 0.2s ease-in-out, transform .2s ease-out;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+a.predict-single:before, a.predict-multiple:before, a.get-all-records:before {
+  content: '';
+  background-color: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  z-index: -1;
+}
+a.predict-single:hover:before, a.predict-multiple:hover:before, a.get-all-records:hover:before {
+  opacity: 1;
+  left: 120%;
+}
+a.predict-single:hover {
+  background-color: #3367D6;
+  transform: scale(1.1);
+}
+a.predict-multiple:hover {
+  background-color: #34A853;
+  transform: scale(1.1);
+}
+.btn-container:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.footer {
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+@media only screen and (max-width: 768px) {
+  .btn-container {
+    flex-direction: column;
+  }
+  a.predict-single, a.predict-multiple, a.get-all-records {
+    margin: 10px 0;
+  }
+}
+
 	</style>
 </head>
 <body>
@@ -116,6 +113,7 @@
 	<div class="btn-container">
 		<a href="/predictsinglerecord" class="predict-single">Predict Loan for Single Record </a>
         <a href="/predictsmultiplerecord" class="predict-multiple">Predict Loan for Multiple Records</a>
+		<a href="/getallrecords" class="get-all-records">Get All Records</a>
         </div>
 </body>
 </html>

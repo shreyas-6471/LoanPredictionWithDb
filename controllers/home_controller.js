@@ -41,7 +41,20 @@ module.exports.multipPredictform=function(req,res)
 
       });
 }
-
+module.exports.fetchallRecords = function(req, res) {
+    Customer.find({})
+      .then(customers => {
+        res.render('allrecords', {
+          customers: customers,
+          title:'All Records'
+        });
+      })
+      .catch(err => {
+        console.log('error in fetching customers', err);
+        res.status(500).send('Error fetching customers');
+      });
+  }
+  
 
 const { spawn } = require('child_process');
 module.exports.modelPredict = function(req, res) {

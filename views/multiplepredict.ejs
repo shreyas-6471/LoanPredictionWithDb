@@ -16,7 +16,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 50px 20px;
-    background-color: #ffffff;
+    background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   }
@@ -30,11 +30,11 @@
   }
   
   .file-upload {
-    display: inline-block;
+    display: flex;
     position: relative;
     font-size: 1.2em;
     font-weight: 600;
-    color: #ffffff;
+    color: black;
     text-align: center;
     background-color: #009688;
     padding: 20px;
@@ -59,12 +59,12 @@
   }
   
   label {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-  }
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
   
   .disclaimer {
     font-size: 0.8em;
@@ -83,7 +83,7 @@
           <i class="fa fa-file-excel-o"></i> Choose Excel File
         </label>
         <input id="file-input" type="file" accept=".xlsx" name="file">
-        <button type="submit">Upload</button>
+      <button type="submit">Upload</button> 
       </form>
       </div>
       <p class="disclaimer">Only XLSX files allowed. Maximum file size of 10MB.</p>
