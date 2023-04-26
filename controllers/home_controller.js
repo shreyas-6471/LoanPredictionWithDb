@@ -100,8 +100,8 @@ module.exports.modelPredict = function(req, res) {
         console.log('Trimmed res is',interres);
         let restosend="";
 
-        console.log('Float value of result is',parseFloat(result));
-        if(parseFloat(result)===0)
+        console.log('Float value of result is',(result[1]));
+        if((result[1])==='0')
         {
             restosend="The customer is most likely to pay off the loan."
         }
@@ -110,7 +110,7 @@ module.exports.modelPredict = function(req, res) {
         }
 
         console.log('From controller',restosend)
-        let new_customer=new customer({
+        let new_customer=new Customer({
             amount:req.body.amount ,
             income: req.body.income,
             debt: req.body.debt,
