@@ -16,6 +16,7 @@ router.get('/predictsmultiplerecord',homeController.multipPredictform);
 router.post('/model',homeController.modelPredict);
 router.post('/uploadmodelsheet',homeController.uploadsheet);
 router.get('/getallrecords',homeController.fetchallRecords);
+router.get('/getcustomer',homeController.getCustomer);
 //router.get('/sign_in',sign_in_Controller.shil);
 //router.get('/sign_up',sign_up_Controller.shil);
 //router.post('/display',submit_sign_up_Controller.shil);

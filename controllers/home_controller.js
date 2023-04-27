@@ -54,7 +54,37 @@ module.exports.fetchallRecords = function(req, res) {
         res.status(500).send('Error fetching customers');
       });
   }
-  
+  module.exports.getCustomer = function(req, res) {
+   /* Customer.find({})
+      .then(customers => {
+        res.render('allrecords', {
+          customers: customers,
+          title:'All Records'
+        });
+      })
+      .catch(err => {
+        console.log('error in fetching customers', err);
+        res.status(500).send('Error fetching customers');
+      });*/
+      console.log(req.query);
+
+      console.log(req.query.id);
+      console.log(req.query['id\\']);
+      const id=req.query['id\\'];
+      Customer.findById(id)
+      .then(customers => {
+        console.log('Fetched customer is',customers);
+        res.render('allrecords', {
+          customers: customers,
+          title:'All Records'
+        });
+      })
+      .catch(err => {
+        console.log('error in fetching customers', err);
+        res.status(500).send('Error fetching customers');
+      });
+  }
+
 
 const { spawn } = require('child_process');
 module.exports.modelPredict = function(req, res) {

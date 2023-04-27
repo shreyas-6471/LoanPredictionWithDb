@@ -7,16 +7,55 @@ body {
 }
 
 body {
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   background-size: cover;
   background-attachment: fixed;
   padding: 0;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
 
+
+label,
+input,
+button {
+  font-size: 16px;
+  margin-bottom: 0.5em;
+  color: #555;
+}
+
+
+input {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+
+button:hover {
+  background-color: #0062cc;
+}
 table { border-collapse: collapse;  border-spacing: 0;  width: 80%;
   margin-bottom: 1em;
+  width: 100%;
+  border-style: dashed;
+  box-sizing: border-box;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
@@ -31,7 +70,7 @@ td {
 }
 
 th {
-  background-color: #007bff;
+  background-color: #1e2b39;
   color: #fff;
   text-transform: uppercase;
   font-size: 14px;
@@ -75,8 +114,13 @@ tr:nth-child(even) {
           
     </head>
     <body>
+      <form action="/getcustomer" method="GET">
+       <label for="customer-id"> <b></b>Enter Customer ID: </b> </label> 
+        <input type="text" id="customer-id" name="id\">  <button type="submit">Get Customer</button></form>
+      
         <table>
     <tr>
+  <th>Customer ID</th>
    <th> Loan Amount </th>
    <th> Annual Income</th>
    <th> Monthly Debt </th>
@@ -93,24 +137,48 @@ tr:nth-child(even) {
     <th> Credit Ranges </th>
     <th>Predicted Loan Status </th>
             </tr>
-            <% for (let i = 1; i < customers.length; i++) { %>
-              <tr>
-                <td><%= customers[i].amount %></td>
-                <td><%= customers[i].income %></td>
-                <td><%= customers[i].debt %></td>
-                <td><%= customers[i].history %></td>
-                <td><%= customers[i].accounts %></td>
-                <td><%= customers[i].balance %></td>
-                <td><%= customers[i].maxcredit %></td>
-                <td><%= customers[i].job %></td>
-                <td><%= customers[i].home %></td>
-                <td><%= customers[i].purpose %></td>
-                <td><%= customers[i].problems %></td>
-                <td><%= customers[i].bankruptcies %></td>
-                <td><%= customers[i].taxliens %></td>
-                <td><%= customers[i].creditranges %></td>
-                <td><%= customers[i].predictedloanstatus %></td>
-              </tr>
+         
+            <% if(customers.length>=0) { %>
+              <% for (let i = 0; i < customers.length; i++) { %>
+                <tr>
+                  <td><%= customers[i]._id %> </td>
+                  <td><%= customers[i].amount %></td>
+                  <td><%= customers[i].income %></td>
+                  <td><%= customers[i].debt %></td>
+                  <td><%= customers[i].history %></td>
+                  <td><%= customers[i].accounts %></td>
+                  <td><%= customers[i].balance %></td>
+                  <td><%= customers[i].maxcredit %></td>
+                  <td><%= customers[i].job %></td>
+                  <td><%= customers[i].home %></td>
+                  <td><%= customers[i].purpose %></td>
+                  <td><%= customers[i].problems %></td>
+                  <td><%= customers[i].bankruptcies %></td>
+                  <td><%= customers[i].taxliens %></td>
+                  <td><%= customers[i].creditranges %></td>
+                  <td><%= customers[i].predictedloanstatus %></td>
+                </tr>
+              <% } %>
+              <% } else {  %>
+                <tr>
+                  <td><%= customers._id %> </td>
+                  <td><%= customers.amount %></td>
+                  <td><%= customers.income %></td>
+                  <td><%= customers.debt %></td>
+                  <td><%= customers.history %></td>
+                  <td><%= customers.accounts %></td>
+                  <td><%= customers.balance %></td>
+                  <td><%= customers.maxcredit %></td>
+                  <td><%= customers.job %></td>
+                  <td><%= customers.home %></td>
+                  <td><%= customers.purpose %></td>
+                  <td><%= customers.problems %></td>
+                  <td><%= customers.bankruptcies %></td>
+                  <td><%= customers.taxliens %></td>
+                  <td><%= customers.creditranges %></td>
+                  <td><%= customers.predictedloanstatus %></td>
+                </tr>
+  
             <% } %>
           </table>
     </body>
