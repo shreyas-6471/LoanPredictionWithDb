@@ -71,6 +71,7 @@ module.exports.fetchallRecords = function(req, res) {
       console.log(req.query.id);
       console.log(req.query['id\\']);
       const id=req.query['id\\'];
+      if(req.query['loanstatus']==''){
       Customer.findById(id)
       .then(customers => {
         console.log('Fetched customer is',customers);
@@ -83,6 +84,28 @@ module.exports.fetchallRecords = function(req, res) {
         console.log('error in fetching customers', err);
         res.status(500).send('Error fetching customers');
       });
+    }
+    else{
+       /* {predictedloanstatus:
+            "[0.0"}*/
+            console.log("'"+
+            req.query.loanstatus+"'");
+            const status=parseFloat(req.query.loanstatus);
+            console.log('status is',status);
+            Customer.find({ predictedloanstatus: `${req.query.loanstatus}`})
+        .then(customers => {
+            console.log('Entered req fn');
+          console.log('Fetched customer is',customers);
+          res.render('allrecords', {
+            customers: customers,
+            title:'All Records'
+          });
+        })
+        .catch(err => {
+          console.log('error in fetching customers', err);
+          res.status(500).send('Error fetching customers');
+        });
+    }
   }
 
 
@@ -155,7 +178,7 @@ module.exports.modelPredict = function(req, res) {
             bankruptcies: req.body.bankruptcies,
             taxliens: req.body.taxliens,
             creditranges: req.body.creditranges,
-            predictedloanstatus:result,
+            predictedloanstatus:result.trim(),
         });
         new_customer.save().then((customer)=>{
             console.log('pushed data successfully to db!');
@@ -261,7 +284,7 @@ module.exports.uploadsheet = function(req, res, next) {
                     xafter.push(cellValue.w);
                    }
                 }
-                xafter.push(myarr[row]);
+                xafter.push(myarr[row].trim());
                 const dataObject = {
                     amount:xafter[0] ,
                     income: xafter[1],
@@ -277,7 +300,7 @@ module.exports.uploadsheet = function(req, res, next) {
                     bankruptcies: xafter[11],
                     taxliens:xafter[12] ,
                     creditranges:xafter[13] ,
-                    predictedloanstatus:xafter[14]
+                    predictedloanstatus:xafter[14].trim()
                   };
                finalxvals.push(dataObject);
                

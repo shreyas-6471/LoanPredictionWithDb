@@ -13,7 +13,7 @@ const { default: mongoose } = require('mongoose');
 //const sassMiddleWare=require('node-sass-middleware');
 //const flash=require('connect-flash');
 //const customMware=require('./config/middleware');
-const port=8003;
+const port=8000;
 /*app.use(
     session({
       secret: 'secret',

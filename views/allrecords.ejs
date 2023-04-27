@@ -114,9 +114,13 @@ tr:nth-child(even) {
           
     </head>
     <body>
-      <form action="/getcustomer" method="GET">
+      <form  id="search-form" action="/getcustomer" method="GET">
        <label for="customer-id"> <b></b>Enter Customer ID: </b> </label> 
-        <input type="text" id="customer-id" name="id\">  <button type="submit">Get Customer</button></form>
+        <input type="text" id="customer-id" name="id\"> 
+        <label for="customer-loan-status"> <b>Enter Loan Status: </b> </label> 
+        <input type="text" id="customer-loan-status" name="loanstatus">
+        <button type="submit" >Get Customer </button>
+      </form>
       
         <table>
     <tr>
