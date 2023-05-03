@@ -4,6 +4,7 @@
 const { PythonShell } = require('python-shell');
 const XLSX = require('xlsx');
 const multer = require('multer');
+//import fetch from 'node-fetch';
 const upload = multer({ dest: 'uploads/' }); // Define the destination folder for uploaded files
 //const tf = require('@tensorflow/tfjs-node');
 const Customer=require('../models/customer');
@@ -116,19 +117,19 @@ module.exports.modelPredict = function(req, res) {
     console.log('Info entered are',req.body);
     const inputValues = [
         parseFloat(req.body.amount),
+        parseFloat(req.body.creditranges),
         parseFloat(req.body.income),
-        parseFloat(req.body.debt),
-        parseFloat(req.body.history),
-        parseFloat(req.body.accounts),
-        parseFloat(req.body.balance),
-        parseFloat(req.body.maxcredit),
         parseFloat(req.body.job),
         parseFloat(req.body.home),
         parseFloat(req.body.purpose),
+        parseFloat(req.body.debt),
+        parseFloat(req.body.history),
+        parseFloat(req.body.accounts),
         parseFloat(req.body.problems),
+        parseFloat(req.body.balance),
+        parseFloat(req.body.maxcredit),
         parseFloat(req.body.bankruptcies),
-        parseFloat(req.body.taxliens),
-        parseFloat(req.body.creditranges)
+        parseFloat(req.body.taxliens)
     ];
     
     let X = [inputValues];      
@@ -287,25 +288,25 @@ module.exports.uploadsheet = function(req, res, next) {
                 xafter.push(myarr[row].trim());
                 const dataObject = {
                     amount:xafter[0] ,
-                    income: xafter[1],
-                    debt: xafter[2],
-                    history: xafter[3],
-                    accounts:xafter[4] ,
-                    balance:xafter[5],
-                    maxcredit:xafter[6] ,
-                    job: xafter[7],
-                    home: xafter[8],
-                    purpose: xafter[9],
-                    problems: xafter[10],
-                    bankruptcies: xafter[11],
-                    taxliens:xafter[12] ,
-                    creditranges:xafter[13] ,
+                    creditranges: xafter[1],
+                    income: xafter[2],
+                    job: xafter[3],
+                    home:xafter[4] ,
+                    purpose:xafter[5],
+                    debt:xafter[6] ,
+                    history: xafter[7],
+                    accounts: xafter[8],
+                    problems: xafter[9],
+                    balance: xafter[10],
+                    maxcredit : xafter[11],
+                    bankruptcies:xafter[12] ,
+                    taxliens:xafter[13] ,
                     predictedloanstatus:xafter[14].trim()
                   };
                finalxvals.push(dataObject);
                
                 }
-              //  console.log('finalxvals is',finalxvals);
+                console.log('finalxvals while pushing to db',finalxvals);
                 finalxvals.forEach(record => {
                     const newRecord = new Customer(record);
                     newRecord.save()
@@ -313,6 +314,11 @@ module.exports.uploadsheet = function(req, res, next) {
                     .catch(err => console.error(err));
 
                   });
+ 
+
+// Create a new workbook
+
+
                   return res.redirect('/');
             });
     
