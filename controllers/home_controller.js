@@ -109,6 +109,24 @@ module.exports.fetchallRecords = function(req, res) {
     }
   }
 
+  module.exports.getresfrommultiple = async function(req, res) {
+    const ids = req.query.ids.split(',');
+    const records = await Promise.all(ids.map(id => Customer.findById(id)));
+    //console.log('Starting...');
+setTimeout(() => {
+ // console.log('Waited 10,000ms');
+}, 1000000);
+    const filteredRecords = records.filter(record => record !== null);
+    
+    res.render('allrecords', {
+      customers: filteredRecords,
+      title: 'All Records'
+    });
+  }
+  
+
+
+
 
 const { spawn } = require('child_process');
 module.exports.modelPredict = function(req, res) {
@@ -307,19 +325,23 @@ module.exports.uploadsheet = function(req, res, next) {
                
                 }
                 console.log('finalxvals while pushing to db',finalxvals);
+                let ids=[]
                 finalxvals.forEach(record => {
                     const newRecord = new Customer(record);
                     newRecord.save()
                     .then(() => console.log('Record saved successfully!'))
                     .catch(err => console.error(err));
-
+                  ids.push(newRecord._id);
                   });
  
 
 // Create a new workbook
+                    const idsString = ids.join(',');
 
+// Create a new workbook
 
-                  return res.redirect('/');
+                  return res.redirect(`/getCustomerResults?ids=${idsString}`);
+
             });
     
         
