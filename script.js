@@ -27,10 +27,10 @@ Promise.all([
   console.log(data2)
 
   var data = {
-    labels: ['Class A', 'Class B'],
+    labels: ['Loan Paid', 'Charged Off'],
     datasets: [{
       data: [data1, data2],
-      backgroundColor: ['green', 'red']
+      backgroundColor: ['#6495ED', 'red']
     }]
   };
   var ctx = document.getElementById('myPieChart').getContext('2d');

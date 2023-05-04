@@ -110,7 +110,7 @@ module.exports.fetchallRecords = function(req, res) {
   }
   module.exports.getcountsofloanstatuspositive = function(req, res) {
 
-    Customer.countDocuments({ predictedloanstatus: { $in: ['[0.0', '0.0','0.0]'] } })
+    Customer.countDocuments({ predictedloanstatus: { $in: ['[0.0', '0.0','0.0]','[0.0]'] } })
     .then(count => {
       console.log(`Number of documents with predictedloanstatus '0.0' or '0.0': ${count}`);
       return res.json(count);
@@ -125,7 +125,7 @@ module.exports.fetchallRecords = function(req, res) {
        
 
      module.exports.getcountsofloanstatusnegative = function(req, res) {
-      Customer.countDocuments({ predictedloanstatus: { $in: ['[1.0', '1.0','1.0]'] } })
+      Customer.countDocuments({ predictedloanstatus: { $in: ['[1.0', '1.0','1.0]','[1.0]'] } })
       .then(count => {
         console.log(`Number of documents with predictedloanstatus '1.0' or '1.0': ${count}`);
         return res.json(count);
