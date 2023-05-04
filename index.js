@@ -1,6 +1,7 @@
 const express=require('express');
 //const err=["vgg","lll"]
 const cookieParser=require('cookie-parser');
+const bodyParser = require('body-parser');
 const app=express();
 //flash = require('express-flash')
 const expressLayouts=require('express-ejs-layouts');
@@ -29,6 +30,8 @@ const port=8000;
     prefix:'/css'
 
 }));*/
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 // Use routes
@@ -85,3 +88,6 @@ app.listen(port,function(err)
         console.log('Server is running on'+port);
     }
 });
+app.get('/script.js', function(req, res) {
+    res.sendFile(__dirname + '/script.js');
+  });

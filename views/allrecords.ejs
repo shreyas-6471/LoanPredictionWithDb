@@ -6,6 +6,13 @@ body {
   height: 100%;
   background-color: #f5f5f5;
 }
+canvas {
+  display: block;
+  margin: 0 auto; /* centers the canvas horizontally */
+  max-width: 100%; /* ensures the canvas fits within its container */
+  height: auto; /* ensures the canvas maintains its aspect ratio */
+  border: 1px solid black; /* adds a border around the canvas */
+}
 
 form {
   display: flex;
@@ -112,9 +119,11 @@ tr:nth-child(even) {
 }
 
           </style>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
           
     </head>
     <body>
+      <canvas id="myPieChart"></canvas>
       <form  id="search-form" action="/getcustomer" method="GET">
        <label for="customer-id"> <b></b>Enter Customer ID: </b> </label> 
         <input type="text" id="customer-id" name="id\"> 
@@ -141,6 +150,7 @@ tr:nth-child(even) {
     <th> Tax Liens </th>
     <th> Credit Ranges </th>
     <th>Predicted Loan Status </th>
+    <th>Get More Insights</th>
             </tr>
          
             <% if(customers.length>=0) { %>
@@ -162,6 +172,7 @@ tr:nth-child(even) {
                   <td><%= customers[i].taxliens %></td>
                   <td><%= customers[i].creditranges %></td>
                   <td><%= customers[i].predictedloanstatus %></td>
+                  <td><button>Get More Insights</button></td>
                 </tr>
               <% } %>
               <% } else {  %>
@@ -182,9 +193,11 @@ tr:nth-child(even) {
                   <td><%= customers.taxliens %></td>
                   <td><%= customers.creditranges %></td>
                   <td><%= customers.predictedloanstatus %></td>
+                  <td><button>Get More Insights</button></td>
                 </tr>
   
             <% } %>
           </table>
+          <script type="text/javascript" src="/script.js"></script>
     </body>
 </html>

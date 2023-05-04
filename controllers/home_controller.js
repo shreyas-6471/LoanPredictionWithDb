@@ -108,6 +108,37 @@ module.exports.fetchallRecords = function(req, res) {
         });
     }
   }
+  module.exports.getcountsofloanstatuspositive = function(req, res) {
+
+    Customer.countDocuments({ predictedloanstatus: { $in: ['[0.0', '0.0','0.0]'] } })
+    .then(count => {
+      console.log(`Number of documents with predictedloanstatus '0.0' or '0.0': ${count}`);
+      return res.json(count);
+    })
+    .catch(err => {
+      console.error(err);
+      return;
+    });
+  
+};
+
+       
+
+     module.exports.getcountsofloanstatusnegative = function(req, res) {
+      Customer.countDocuments({ predictedloanstatus: { $in: ['[1.0', '1.0','1.0]'] } })
+      .then(count => {
+        console.log(`Number of documents with predictedloanstatus '1.0' or '1.0': ${count}`);
+        return res.json(count);
+      })
+      .catch(err => {
+        console.error(err);
+        return;
+      });
+    
+      
+           }  
+
+
 
   module.exports.getresfrommultiple = async function(req, res) {
     const ids = req.query.ids.split(',');
@@ -117,7 +148,7 @@ setTimeout(() => {
  // console.log('Waited 10,000ms');
 }, 1000000);
     const filteredRecords = records.filter(record => record !== null);
-    
+
     res.render('allrecords', {
       customers: filteredRecords,
       title: 'All Records'
