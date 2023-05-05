@@ -110,7 +110,7 @@ module.exports.fetchallRecords = function(req, res) {
   }
   module.exports.getcountsofloanstatuspositive = function(req, res) {
 
-    Customer.countDocuments({ predictedloanstatus: { $in: ['[0.0', '0.0','0.0]','[0.0]'] } })
+    Customer.countDocuments({ predictedloanstatus: { $in: ['0'] } })
     .then(count => {
       console.log(`Number of documents with predictedloanstatus '0.0' or '0.0': ${count}`);
       return res.json(count);
@@ -125,7 +125,7 @@ module.exports.fetchallRecords = function(req, res) {
        
 
      module.exports.getcountsofloanstatusnegative = function(req, res) {
-      Customer.countDocuments({ predictedloanstatus: { $in: ['[1.0', '1.0','1.0]','[1.0]'] } })
+      Customer.countDocuments({ predictedloanstatus: { $in: ['1'] } })
       .then(count => {
         console.log(`Number of documents with predictedloanstatus '1.0' or '1.0': ${count}`);
         return res.json(count);
@@ -198,13 +198,19 @@ module.exports.modelPredict = function(req, res) {
 
     pythonProcess.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        console.log('Predicted result in node is!!!', result);
-        let interres=result.trim();
+        console.log('values from py in node is', result);
+        let lst = JSON.parse(result);
+        console.log('List vals is',lst);
+        //processedres[]=result.split(',');
+        let interres=lst[0].toString().trim();
+        let probabs=lst[1];
+        console.log('probabilities is',probabs);
+        console.log('first prob is', probabs[0]);
         console.log('Trimmed res is',interres);
         let restosend="";
 
-        console.log('Result is',(result[1]));
-        if((result[1])==='0')
+        //console.log('Result is',(result[1]));
+        if(interres=='0')
         {
             restosend="The customer is most likely to pay off the loan."
         }
@@ -228,7 +234,8 @@ module.exports.modelPredict = function(req, res) {
             bankruptcies: req.body.bankruptcies,
             taxliens: req.body.taxliens,
             creditranges: req.body.creditranges,
-            predictedloanstatus:result.trim(),
+            predictedloanstatus:interres,
+            probability:probabs[0][0].toString()
         });
         new_customer.save().then((customer)=>{
             console.log('pushed data successfully to db!');
@@ -319,10 +326,15 @@ module.exports.uploadsheet = function(req, res, next) {
         pythonProcess.on('close', (code) => {
            // console.log(`child process exited with code ${code}`);
             //console.log('Predicted result in node is!!!', result);
-            let interres=result.trim();
-           // console.log('Trimmed res is',interres);
-           const myarr= result.split(',');
-          // console.log('My array is',myarr);
+            console.log('Result ret is',result);
+            let lst = JSON.parse(result);
+            console.log('List is',lst);
+            let interres=lst[0];
+            console.log('Trimmed res is',interres);
+           const myarr= interres;
+           const probabs=lst[1];
+           const probstostorearr=probabs;
+          console.log('My array is first elem is',myarr[0]);
             let finalxvals=[];
             for(let row=0;row<numRows;row++)
             {
@@ -334,7 +346,8 @@ module.exports.uploadsheet = function(req, res, next) {
                     xafter.push(cellValue.w);
                    }
                 }
-                xafter.push(myarr[row].trim());
+                xafter.push(myarr[row].toString().trim());
+                xafter.push(probstostorearr[row][0].toString().trim());
                 const dataObject = {
                     amount:xafter[0] ,
                     creditranges: xafter[1],
@@ -350,7 +363,8 @@ module.exports.uploadsheet = function(req, res, next) {
                     maxcredit : xafter[11],
                     bankruptcies:xafter[12] ,
                     taxliens:xafter[13] ,
-                    predictedloanstatus:xafter[14].trim()
+                    predictedloanstatus:xafter[14].trim(),
+                    probability:xafter[15]
                   };
                finalxvals.push(dataObject);
                

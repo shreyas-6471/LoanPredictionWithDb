@@ -17,6 +17,8 @@ const customerSchema=new mongoose.Schema({
     taxliens: { type: String, required: true },
     creditranges: { type: String, required: true },
     predictedloanstatus:{type:String,required:true},
+    probability:{type:String},
+    features:[String]
 },{
     timestamps:true
 });

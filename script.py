@@ -4,36 +4,40 @@ import sys
 import sys
 import json
 import numpy as np
+import eli5
 from sklearn.preprocessing import RobustScaler
+
 X = json.loads(sys.argv[1])
 arr = np.array(X)
-#print(arr)
-# Load the KNN model from disk
+
+# Load the logistic regression model from disk
 model = joblib.load('logisticregressionmodel.joblib')
 ro_scaler = joblib.load('ro_scaler.joblib')
-# Define the input data as a list of lists
-#X = [[292222221.251197, 0.689829, -0.447197, 0.666667, -1.0, 0.0, -0.145846, 0.878049, -0.166667, 0.0, 0.248974, 0.195695, 0.0, 0.0]]
-#ro_scaler = RobustScaler()
-
+transformer=joblib.load('transformer.joblib')
+# Preprocess the input data
 x = ro_scaler.transform(arr)
-#print(x)
-# Convert the input to a pandas DataFrame
-columns=['Current Loan Amount' , 'Credit Score' , 'Annual Income' , 'Years in current job' , 'Home Ownership' , 'Purpose' , 'Monthly Debt' , 'Years of Credit History' , 'Number of Open Accounts' ,'Number of Credit Problems',  'Current Credit Balance', 'Maximum Open Credit', 'Bankruptcies', 'Tax Liens']
-df = pd.DataFrame(x, columns=columns)
-#X_preprocessed = model.named_steps['preprocessor'].transform(df)
-#print(df['Current Loan Amount'])
-#print(df)
-#print('Going to start predictions')
+df = pd.DataFrame(x, columns=['Current Loan Amount', 'Credit Score', 'Annual Income', 'Years in current job', 'Home Ownership', 'Purpose', 'Monthly Debt', 'Years of Credit History', 'Number of Open Accounts', 'Number of Credit Problems', 'Current Credit Balance', 'Maximum Open Credit', 'Bankruptcies', 'Tax Liens'])
+#transformer = model.named_steps['preprocessor']
+
+#preprocessed_feature_names = transformer.named_transformers_['num'].get_feature_names().tolist() + transformer.named_transformers['cat'].get_feature_names().tolist()
+#preprocessed_feature_names = transformer.named_transformers_['num'].get_feature_names().tolist() + transformer.named_transformers_['cat'].get_feature_names().tolist()
+#df.columns = preprocessed_feature_names
+
 # Make predictions on the input data
 predicted = model.predict(df)
-#print('Done predicting!! in script')
-# Print the predicted results to stdoutp
-retvals=[]
-for preds in (predicted):
+values = []
+retvals = []
+for preds in predicted:
     retvals.append(preds)
-print(retvals)
+values.append(retvals)
+prob = model.predict_proba(df)
+values.append(prob.tolist())
 
+# Calculate feature importance and get top 3 features
+#feature_weights = eli5.explain_weights(model, feature_names=preprocessed_feature_names)
+#top_features = [x.feature for x in feature_weights.feature_importances[:3]]
+#values.append(top_features)
 
-# Flush stdout to ensure the output is immediately available to Node.js
-
+# Print the results to stdout
+print(values)
 sys.stdout.flush()

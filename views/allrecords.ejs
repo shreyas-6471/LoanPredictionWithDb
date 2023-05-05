@@ -42,7 +42,12 @@ button {
   width: 100%;
   max-width: 360px;
 }
-
+#insights{
+  background-color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 input:focus {
   outline: none;
   border: 2px solid #007bff;
@@ -172,7 +177,10 @@ tr:nth-child(even) {
                   <td><%= customers[i].taxliens %></td>
                   <td><%= customers[i].creditranges %></td>
                   <td><%= customers[i].predictedloanstatus %></td>
-                  <td><button>Get More Insights</button></td>
+                  <form action="/getinsights" method="POST">
+                    <input type="hidden" name="bestie" value="<%= customers[i]._id %>">
+                  <td><button type="submit" id="insights">Get More Insights</button></td>
+                  </form>
                 </tr>
               <% } %>
               <% } else {  %>
@@ -193,7 +201,10 @@ tr:nth-child(even) {
                   <td><%= customers.taxliens %></td>
                   <td><%= customers.creditranges %></td>
                   <td><%= customers.predictedloanstatus %></td>
-                  <td><button>Get More Insights</button></td>
+                  <form action="/getinsights" method="POST">
+                    <input type="hidden" name="bestie" value="<%= customers[i]._id %>">
+                  <td><button type="submit" id="insights">Get More Insights</button></td>
+                  </form>
                 </tr>
   
             <% } %>
