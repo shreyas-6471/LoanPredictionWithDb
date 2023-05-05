@@ -55,71 +55,72 @@ async function fetchDataandplot() {
       const data2 = await response2.json();
       positive = data2;
       console.log(data2);
+
       const tr = document.getElementById(id);
       const container = document.createElement('div');
-container.id = 'myChartContainer';
-//document.body.appendChild(container);
+      container.id = 'myChartContainer';
+      container.style.display = 'flex';
+      container.style.justifyContent = 'center';
 
-// Create a canvas element and add it to the container
-const canvas = document.createElement('canvas');
-canvas.id = 'myChart';
-container.appendChild(canvas);
-tr.insertAdjacentElement('afterend', container);
-// Use the container to render the chart
-const ctx = canvas.getContext('2d');
+      // Create a canvas element and add it to the container
+      const canvas = document.createElement('canvas');
+      canvas.id = 'myChart';
+
+      container.appendChild(canvas);
+      tr.insertAdjacentElement('afterend', container);
+
+      // Use the container to render the chart
+      const ctx = canvas.getContext('2d');
+
       // Extract the necessary data from the array of objects
-const creditScoreData = data2.map(obj => parseFloat(obj.creditranges));
-const homeownershipData = data2.map(obj => parseFloat(obj.home));
-const predictedLoanStatusData = data2.map(obj => parseInt(obj.predictedloanstatus));
-//var negativeCreditScore=data1.map(obj => parseFloat(obj.creditranges));
-//var negativehomeownershipData = data1.map(obj => parseFloat(obj.home));
-//var negativeredictedLoanStatusData = data1.map(obj => parseInt(obj.predictedloanstatus));
-creditScoreData.push(data1.creditranges);
-homeownershipData.push(data1.home);
-predictedLoanStatusData.push(data1.predictedloanstatus);
-console.log(creditScoreData)
-console.log(homeownershipData)
-console.log(predictedLoanStatusData)
-// Create a new Chart object
-//const ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-        datasets: [{
-            label: 'Predicted Loan Status',
-            data: creditScoreData.map((value, index) => ({x: value, y: homeownershipData[index]})),
-            backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(54, 162, 235, 0.2)'),
-            borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,1)' : 'rgba(54, 162, 235, 1)'),
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                type: 'linear',
-                position: 'bottom',
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Credit Score'
-                }
-            }],
-            yAxes: [{
-                type: 'linear',
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Home Ownership'
-                }
-            }]
-        }
-    }
-});
+      const creditScoreData = data2.map(obj => parseFloat(obj.creditranges));
+      const homeownershipData = data2.map(obj => parseFloat(obj.home));
+      const predictedLoanStatusData = data2.map(obj => parseInt(obj.predictedloanstatus));
+      creditScoreData.push(data1.creditranges);
+      homeownershipData.push(data1.home);
+      predictedLoanStatusData.push(data1.predictedloanstatus);
+
+      // Create a new Chart object
+      const myChart = new Chart(ctx, {
+          type: 'scatter',
+          data: {
+              datasets: [{
+                  label: 'Predicted Loan Status',
+                  data: creditScoreData.map((value, index) => ({x: value, y: homeownershipData[index]})),
+                  backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(54, 162, 235, 0.2)'),
+                  borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,1)' : 'rgba(54, 162, 235, 1)'),
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  xAxes: [{
+                      type: 'linear',
+                      position: 'bottom',
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Credit Score'
+                      }
+                  }],
+                  yAxes: [{
+                      type: 'linear',
+                      scaleLabel: {
+                          display: true,
+                          labelString: 'Home Ownership'
+                      }
+                  }]
+              }
+          }
+      });
 
     } catch (error) {
       console.error(error);
     }
   }
 }
-if(id!=''){
-fetchDataandplot();
+
+if(id!='') {
+  fetchDataandplot();
 }
+
 

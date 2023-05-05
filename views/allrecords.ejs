@@ -157,6 +157,7 @@ tr:nth-child(even) {
     <th> Tax Liens </th>
     <th> Credit Ranges </th>
     <th>Predicted Loan Status </th>
+    <th>probability of  Loan being Paid Off </th>
     <th>Get More Insights</th>
             </tr>
          
@@ -179,6 +180,7 @@ tr:nth-child(even) {
                   <td><%= customers[i].taxliens %></td>
                   <td><%= customers[i].creditranges %></td>
                   <td><%= customers[i].predictedloanstatus %></td>
+                  <td><%= customers[i].probability %></td>
                   <form action="/getinsights" method="POST">
                     <input type="hidden" name="bestie" value="<%= customers[i]._id %>">
                   <td><button type="submit" id="insights">Get More Insights</button></td>
@@ -203,6 +205,7 @@ tr:nth-child(even) {
                   <td><%= customers.taxliens %></td>
                   <td><%= customers.creditranges %></td>
                   <td><%= customers.predictedloanstatus %></td>
+                  <td><%= customers.probability %></td>
                   <form action="/getinsights" method="POST">
                     <input type="hidden" name="bestie" value="<%= customers._id %>">
                   <td><button type="submit" id="insights">Get More Insights</button></td>
