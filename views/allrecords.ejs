@@ -125,6 +125,8 @@ tr:nth-child(even) {
 
           </style>
           <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
           
     </head>
     <body>
@@ -160,7 +162,7 @@ tr:nth-child(even) {
          
             <% if(customers.length>=0) { %>
               <% for (let i = 0; i < customers.length; i++) { %>
-                <tr>
+                <tr id=<%= customers[i]._id %>>
                   <td><%= customers[i]._id %> </td>
                   <td><%= customers[i].amount %></td>
                   <td><%= customers[i].income %></td>
@@ -184,7 +186,7 @@ tr:nth-child(even) {
                 </tr>
               <% } %>
               <% } else {  %>
-                <tr>
+                <tr id=<%= customers._id %>>
                   <td><%= customers._id %> </td>
                   <td><%= customers.amount %></td>
                   <td><%= customers.income %></td>
@@ -202,13 +204,18 @@ tr:nth-child(even) {
                   <td><%= customers.creditranges %></td>
                   <td><%= customers.predictedloanstatus %></td>
                   <form action="/getinsights" method="POST">
-                    <input type="hidden" name="bestie" value="<%= customers[i]._id %>">
+                    <input type="hidden" name="bestie" value="<%= customers._id %>">
                   <td><button type="submit" id="insights">Get More Insights</button></td>
                   </form>
                 </tr>
   
             <% } %>
           </table>
+          <script>
+            const id = ('<%= id %>');
+          </script>
+          
+          
           <script type="text/javascript" src="/script.js"></script>
     </body>
 </html>

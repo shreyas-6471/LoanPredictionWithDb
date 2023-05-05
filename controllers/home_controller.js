@@ -47,7 +47,8 @@ module.exports.fetchallRecords = function(req, res) {
       .then(customers => {
         res.render('allrecords', {
           customers: customers,
-          title:'All Records'
+          title:'All Records',
+          id:''
         });
       })
       .catch(err => {
@@ -78,7 +79,8 @@ module.exports.fetchallRecords = function(req, res) {
         console.log('Fetched customer is',customers);
         res.render('allrecords', {
           customers: customers,
-          title:'All Records'
+          title:'All Records',
+          id:''
         });
       })
       .catch(err => {
@@ -99,7 +101,8 @@ module.exports.fetchallRecords = function(req, res) {
           console.log('Fetched customer is',customers);
           res.render('allrecords', {
             customers: customers,
-            title:'All Records'
+            title:'All Records',
+            id:''
           });
         })
         .catch(err => {
@@ -151,7 +154,8 @@ setTimeout(() => {
 
     res.render('allrecords', {
       customers: filteredRecords,
-      title: 'All Records'
+      title: 'All Records',
+      id:''
     });
   }
   
@@ -394,6 +398,44 @@ module.exports.uploadsheet = function(req, res, next) {
     };
        
     
+module.exports.getinsights=function(req, res, next) {
+  const id=req.body.bestie;
+  Customer.find({})
+      .then(customers => {
+        res.render('allrecords', {
+          customers: customers,
+          title:'All Records',
+          id:id
+        });
+      })
+      .catch(err => {
+        console.log('error in fetching customers', err);
+        res.status(500).send('Error fetching customers');
+      });
+}
+module.exports.getloanstatuspositive=function(req,res)
+{
+  Customer.find({predictedloanstatus:'0'})
+      .then(positivecustomers => {
+        return res.json(positivecustomers);
+      })
+      .catch(err => {
+        console.log('error in fetching customers', err);
+        res.status(500).send('Error fetching customers');
+      });
+}
+module.exports.getonerecordwithid=function(req,res)
+{
+  Customer.findById(req.query.id)
+      .then(onerecordwithid => {
+        return res.json(onerecordwithid);
+      })
+      .catch(err => {
+        console.log('error in fetching one customer with id', err);
+        res.status(500).send('Error fetching customers');
+      });
+}
+
 
 
 
