@@ -243,6 +243,7 @@ module.exports.modelPredict = function(req, res) {
         });
         new_customer.save().then((customer)=>{
             console.log('pushed data successfully to db!');
+           // req.flash('success', 'You have successfully added record!');
             return res.render('home', { 
                 title:'Loan Prediction Application',
                 predictedResult:restosend 

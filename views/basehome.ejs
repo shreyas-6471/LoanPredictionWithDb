@@ -4,40 +4,51 @@
 	<title>Loan Prediction</title>
 	<link rel="stylesheet" href="basestyle.css">
 	<style>
+/* Define global styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   margin: 0;
   padding: 0;
   background-color: #f1f1f1;
- 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
   background-image: url('https://img.freepik.com/free-photo/business-debt-wages-got-usd_1150-1020.jpg?w=1800&t=st=1682728628~exp=1682729228~hmac=cd0edc8591faa24830fdbaf710407703d44d9c2ccacca6852103ea624d13b0eb');
   background-size: cover;
 }
 
-h1 {
+/* Define header styles */
+header {
+  background-color: #343a40;
+  color: #fff;
+  padding: 20px;
   text-align: center;
-  margin-top: 50px;
-  color: #0f0202;
+}
+
+header h1 {
   font-size: 48px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 5px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px #000;
 }
+
+/* Define button styles */
 .btn-container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   margin-top: 50px;
 }
-a.predict-single, a.predict-multiple, a.get-all-records {
+
+.btn-container a {
   display: inline-block;
-  background-color: rgb(25, 25, 114);
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -54,7 +65,8 @@ a.predict-single, a.predict-multiple, a.get-all-records {
   overflow: hidden;
   position: relative;
 }
-a.predict-single:before, a.predict-multiple:before, a.get-all-records:before {
+
+.btn-container a:before {
   content: '';
   background-color: rgba(255, 255, 255, 0.6);
   position: absolute;
@@ -67,28 +79,25 @@ a.predict-single:before, a.predict-multiple:before, a.get-all-records:before {
   transition: all 0.5s ease-in-out;
   z-index: -1;
 }
-a.predict-single:hover:before, a.predict-multiple:hover:before, a.get-all-records:hover:before {
+
+.btn-container a:hover:before {
   opacity: 1;
   left: 120%;
 }
-a.predict-single:hover {
+
+.btn-container a:hover {
   background-color: #34A853;
   transform: scale(1.1);
 }
-a.predict-multiple:hover {
-  background-color: #34A853;
-  transform: scale(1.1);
-}
-a.get-all-records:hover{
-  background-color: #34A853;
-  transform: scale(1.1);
-}
+
 .btn-container:after {
   content: '';
   clear: both;
   display: table;
 }
-.footer {
+
+/* Define footer styles */
+footer {
   background-color: #333;
   color: #fff;
   font-size: 14px;
@@ -99,10 +108,12 @@ a.get-all-records:hover{
   left: 0;
   right: 0;
 }
-.footer a {
+
+footer a {
   color: #fff;
   text-decoration: none;
 }
+
 @media only screen and (max-width: 768px) {
   .btn-container {
     flex-direction: column;
@@ -115,7 +126,9 @@ a.get-all-records:hover{
 	</style>
 </head>
 <body>
+  <header>
 <h1>Loan Prediction</h1> 
+  </header>
 	<div class="btn-container">
 		<a href="/predictsinglerecord" class="predict-single">Predict Loan for Single Record </a>
         <a href="/predictsmultiplerecord" class="predict-multiple">Predict Loan for Multiple Records</a>

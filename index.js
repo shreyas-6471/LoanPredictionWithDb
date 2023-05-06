@@ -12,9 +12,9 @@ const { default: mongoose } = require('mongoose');
 //const passportLocal=require('./config/passport_local_startegy');
 //const mongoStore = new (require('connect-mongo')(session))({ url: 'mongodb://localhost/loan_prediction'});
 //const sassMiddleWare=require('node-sass-middleware');
-//const flash=require('connect-flash');
+const flash=require('connect-flash');
 //const customMware=require('./config/middleware');
-const port=8000;
+const port=8001;
 /*app.use(
     session({
       secret: 'secret',
@@ -39,6 +39,7 @@ app.use(express.static('./assets'));
 app.use(expressLayouts);
 app.use('/uploads',express.static(__dirname+'/uploads'));
 app.set('view engine','ejs');
+
 app.set('views','./views');
 /*app.use(session({
     secret:'shreyas',
@@ -77,6 +78,7 @@ async function connect(){
 }
 connect();
 app.use('/',require('./routes'));
+app.use(flash());
 app.listen(port,function(err)
 {
     if(err)
