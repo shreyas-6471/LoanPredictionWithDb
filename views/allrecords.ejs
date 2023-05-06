@@ -19,6 +19,7 @@ form {
   flex-direction: column;
   align-items: center;
   margin-top: 2em;
+ 
 }
 
 label,
@@ -132,6 +133,7 @@ tr:nth-child(even) {
     <body>
       
       <canvas id="myPieChart"></canvas>
+      <div id="container">
       <form  id="search-form" action="/getcustomer" method="GET">
        <label for="customer-id"> <b></b>Enter Customer ID: </b> </label> 
         <input type="text" id="customer-id" name="id\"> 
@@ -139,7 +141,7 @@ tr:nth-child(even) {
         <input type="text" id="customer-loan-status" name="loanstatus">
         <button type="submit" >Get Customer </button>
       </form>
-      
+    </div>
         <table>
     <tr>
   <th>Customer ID</th>

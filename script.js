@@ -56,11 +56,12 @@ async function fetchDataandplot() {
       positive = data2;
       console.log(data2);
 
-      const tr = document.getElementById(id);
+      const tr = document.getElementById('search-form');
       const container = document.createElement('div');
       container.id = 'myChartContainer';
       container.style.display = 'flex';
       container.style.justifyContent = 'center';
+      container.style.backgroundColor="white";
 
       // Create a canvas element and add it to the container
       const canvas = document.createElement('canvas');
@@ -87,8 +88,8 @@ async function fetchDataandplot() {
               datasets: [{
                   label: 'Predicted Loan Status',
                   data: creditScoreData.map((value, index) => ({x: value, y: homeownershipData[index]})),
-                  backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(54, 162, 235, 0.2)'),
-                  borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,1)' : 'rgba(54, 162, 235, 1)'),
+                  backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 20)' : 'rgba(54, 162, 235, 0.2)'),
+                  borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,10)' : 'rgba(54, 162, 235, 1)'),
                   borderWidth: 1
               }]
           },
