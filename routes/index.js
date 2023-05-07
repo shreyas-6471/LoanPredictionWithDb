@@ -23,6 +23,8 @@ router.get('/getCountOfLoanStatusNegative',homeController.getcountsofloanstatusn
 router.post('/getinsights',homeController.getinsights);
 router.get('/getloanstatuspositive',homeController.getloanstatuspositive);
 router.get('/getonerecordwithid',homeController.getonerecordwithid);
+router.get('/getcountwithcredandstatus',homeController.getCredscoreStatusCount);
+router.get('/getcountwithhomeloanstatus',homeController.getOwnershiploanStatusCount);
 //router.get('/sign_in',sign_in_Controller.shil);
 //router.get('/sign_up',sign_up_Controller.shil);
 //router.post('/display',submit_sign_up_Controller.shil);

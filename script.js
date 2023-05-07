@@ -43,6 +43,228 @@ Promise.all([
     options: {}
   });
 });
+async function fetchandPlotHomeOwnershiploanstatusCountPlot(){
+  const loanpaidofffirstrange=await fetch('/getcountwithhomeloanstatus?status=0&ownership=0');
+  const loanpaidfirstslab=await loanpaidofffirstrange.json();
+  console.log(loanpaidfirstslab);
+  const loanpaidoffsecondrange=await fetch('/getcountwithhomeloanstatus?status=0&ownership=1');
+  const loanpaidoffsecondslab=await loanpaidoffsecondrange.json();
+  console.log(loanpaidoffsecondslab);
+  const loanpaidoffthirdrange=await fetch('/getcountwithhomeloanstatus?status=0&ownership=2');
+  const loanpaidoffthirdslab=await loanpaidoffthirdrange.json();
+  console.log(loanpaidoffthirdslab);
+  const loanchargedofffirstrange=await fetch('/getcountwithhomeloanstatus?status=1&ownership=0');
+  const loanchargedofffirstslab=await loanchargedofffirstrange.json();
+  console.log(loanchargedofffirstslab);
+  const loanchargedoffsecondrange=await fetch('/getcountwithhomeloanstatus?status=1&ownership=1');
+  const loanchargedoffsecondslab=await loanchargedoffsecondrange.json();
+  console.log(loanchargedoffsecondslab);
+  const loanchargedoffthirdrange=await fetch('/getcountwithhomeloanstatus?status=1&ownership=2');
+  const loanchargedoffthirdslab=await loanchargedoffthirdrange.json();
+  console.log(loanchargedoffthirdslab);
+  // Prepare the data for the chart
+  const data = {
+    labels: ['Loan Paid Off & Ownership(1)', 'Loan Paid Off & Ownership(2)', 'Loan Paid Off & Ownership(3)', 'Loan Charged Off & Ownership(1)', 'Loan Charged Off & Ownership(2)', 'Loan Charged Off & Ownership(3)'],
+    datasets: [{
+      label: 'Count',
+      data: [loanpaidfirstslab, loanpaidoffsecondslab, loanpaidoffthirdslab, loanchargedofffirstslab, loanchargedoffsecondslab, loanchargedoffthirdslab],
+      backgroundColor: [
+        'rgba(0, 128, 255, 0.8)',
+        'rgba(0, 128, 255, 0.6)',
+        'rgba(0, 128, 255, 0.4)',
+        'rgba(255, 0, 0, 0.8)',
+        'rgba(255, 0, 0, 0.6)',
+        'rgba(255, 0, 0, 0.4)'
+      ],
+      borderColor: 'black',
+      borderWidth: 2,
+      hoverBackgroundColor: [
+        'rgba(0, 128, 255, 1)',
+        'rgba(0, 128, 255, 0.8)',
+        'rgba(0, 128, 255, 0.6)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(255, 0, 0, 0.8)',
+        'rgba(255, 0, 0, 0.6)'
+      ],
+      hoverBorderColor: 'white',
+      barPercentage: 0.6
+    }]
+  };
+  
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Loan Status by Home Ownership',
+        font: {
+          size: 24,
+          family: 'Arial'
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: {
+              size: 16,
+              family: 'Arial'
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size: 16,
+              family: 'Arial'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Count',
+            font: {
+              size: 20,
+              family: 'Arial'
+            }
+          }
+        }
+      },
+      animation: {
+        duration: 1000
+      }
+    }
+  };
+  
+  // Create the chart
+  const myChart = new Chart(document.getElementById('countplotonhomeownership'), config);
+  
+
+  // Create the chart
+  //const chart = new Chart(document.getElementById('countplotcreditscore'), config);
+
+}
+async function fetchAndPlotCreditScoreCountPlot(){
+  const loanpaidofffirstrange=await fetch('/getcountwithcredandstatus?status=0&credrange=0');
+  const loanpaidfirstslab=await loanpaidofffirstrange.json();
+  console.log(loanpaidfirstslab);
+  const loanpaidoffsecondrange=await fetch('/getcountwithcredandstatus?status=0&credrange=1');
+  const loanpaidoffsecondslab=await loanpaidoffsecondrange.json();
+  console.log(loanpaidoffsecondslab);
+  const loanpaidoffthirdrange=await fetch('/getcountwithcredandstatus?status=0&credrange=2');
+  const loanpaidoffthirdslab=await loanpaidoffthirdrange.json();
+  console.log(loanpaidoffthirdslab);
+  const loanchargedofffirstrange=await fetch('/getcountwithcredandstatus?status=1&credrange=0');
+  const loanchargedofffirstslab=await loanchargedofffirstrange.json();
+  console.log(loanchargedofffirstslab);
+  const loanchargedoffsecondrange=await fetch('/getcountwithcredandstatus?status=1&credrange=1');
+  const loanchargedoffsecondslab=await loanchargedoffsecondrange.json();
+  console.log(loanchargedoffsecondslab);
+  const loanchargedoffthirdrange=await fetch('/getcountwithcredandstatus?status=1&credrange=2');
+  const loanchargedoffthirdslab=await loanchargedoffthirdrange.json();
+  console.log(loanchargedoffthirdslab);
+  // Prepare the data for the chart
+  const data = {
+    labels: ['Loan Paid Off 1', 'Loan Paid Off 2', 'Loan Paid Off 3', 'Loan Charged Off 1', 'Loan Charged Off 2', 'Loan Charged Off 3'],
+    datasets: [{
+      label: 'Count',
+      data: [loanpaidfirstslab, loanpaidoffsecondslab, loanpaidoffthirdslab, loanchargedofffirstslab, loanchargedoffsecondslab, loanchargedoffthirdslab],
+      backgroundColor: [
+        'rgba(0, 128, 255, 0.8)',
+        'rgba(0, 128, 255, 0.6)',
+        'rgba(0, 128, 255, 0.4)',
+        'rgba(255, 0, 0, 0.8)',
+        'rgba(255, 0, 0, 0.6)',
+        'rgba(255, 0, 0, 0.4)'
+      ],
+      borderColor: 'black',
+      borderWidth: 2,
+      hoverBackgroundColor: [
+        'rgba(0, 128, 255, 1)',
+        'rgba(0, 128, 255, 0.8)',
+        'rgba(0, 128, 255, 0.6)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(255, 0, 0, 0.8)',
+        'rgba(255, 0, 0, 0.6)'
+      ],
+      hoverBorderColor: 'white',
+      barPercentage: 0.6
+    }]
+  };
+  
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Loan Status by Credit Range',
+        font: {
+          size: 24,
+          family: 'Arial'
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: {
+              size: 16,
+              family: 'Arial'
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size: 16,
+              family: 'Arial'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Count',
+            font: {
+              size: 20,
+              family: 'Arial'
+            }
+          }
+        }
+      },
+      animation: {
+        duration: 1000
+      }
+    }
+  };
+  
+  // Create the chart
+  const myChart = new Chart(document.getElementById('countplotcreditscore'), config);
+  
+
+  // Create the chart
+  //const chart = new Chart(document.getElementById('countplotcreditscore'), config);
+
+}
+fetchAndPlotCreditScoreCountPlot()
+fetchandPlotHomeOwnershiploanstatusCountPlot();
 async function fetchDataandplot() {
   if (id !== '') {
     try {
@@ -75,10 +297,10 @@ async function fetchDataandplot() {
 
       // Extract the necessary data from the array of objects
       const creditScoreData = data2.map(obj => parseFloat(obj.creditranges));
-      const homeownershipData = data2.map(obj => parseFloat(obj.home));
+      const monthlydebtData = data2.map(obj => parseFloat(obj.debt));
       const predictedLoanStatusData = data2.map(obj => parseInt(obj.predictedloanstatus));
       creditScoreData.push(data1.creditranges);
-      homeownershipData.push(data1.home);
+      monthlydebtData.push(data1.debt);
       predictedLoanStatusData.push(data1.predictedloanstatus);
 
       // Create a new Chart object
@@ -87,7 +309,7 @@ async function fetchDataandplot() {
           data: {
               datasets: [{
                   label: 'Predicted Loan Status',
-                  data: creditScoreData.map((value, index) => ({x: value, y: homeownershipData[index]})),
+                  data: creditScoreData.map((value, index) => ({x: value, y: monthlydebtData[index]})),
                   backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 20)' : 'rgba(54, 162, 235, 0.2)'),
                   borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,10)' : 'rgba(54, 162, 235, 1)'),
                   borderWidth: 1
@@ -107,7 +329,7 @@ async function fetchDataandplot() {
                       type: 'linear',
                       scaleLabel: {
                           display: true,
-                          labelString: 'Home Ownership'
+                          labelString: 'Monthly Debt'
                       }
                   }]
               }
@@ -119,6 +341,7 @@ async function fetchDataandplot() {
     }
   }
 }
+
 
 if(id!='') {
   fetchDataandplot();

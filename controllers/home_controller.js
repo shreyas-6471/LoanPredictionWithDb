@@ -125,8 +125,57 @@ module.exports.fetchallRecords = function(req, res) {
   
 };
 
-       
-
+      module.exports.getCredscoreStatusCount=function(req,res){
+        let status=req.query.status;
+        let credrange=req.query.credrange;
+        console.log('Status and cred range is',status,credrange);
+        let greater,lesser;
+        if(credrange==0){
+          greater=580;
+          lesser=670;
+        }
+        else if(credrange==1){
+          greater=670;
+          lesser=738;
+        }
+        else{
+          greater=740;
+          lesser=800;
+        }
+        console.log('greater and lesser is',greater,lesser);
+        Customer.countDocuments({
+          predictedloanstatus: { $in: [status] },
+          creditranges: { $gte:greater, $lte: lesser  } // new condition
+        })
+        .then(count => {
+          console.log(`Number of documents with predictedloanstatus '0.0' or '0.0' and loan amount >= 5000: ${count}`);
+          return res.json(count);
+        })
+        .catch(err => {
+          console.error(err);
+          return;
+        });
+        
+      } 
+module.exports.getOwnershiploanStatusCount=function(req,res)
+{
+ // /getcountwithhomeloanstatus?status=0&ownership=0
+ let status=req.query.status;
+  let ownership=req.query.ownership;
+  console.log('Status and cred range is',status,ownership);
+  Customer.countDocuments({
+    predictedloanstatus: { $in: [status] },
+    home: ownership // new condition
+  })
+  .then(count => {
+    console.log(`Number of documents with predictedloanstatus '0.0' or '0.0' and loan amount >= 5000: ${count}`);
+    return res.json(count);
+  })
+  .catch(err => {
+    console.error(err);
+    return;
+  });
+}
      module.exports.getcountsofloanstatusnegative = function(req, res) {
       Customer.countDocuments({ predictedloanstatus: { $in: ['1'] } })
       .then(count => {
