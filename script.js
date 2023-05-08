@@ -64,7 +64,7 @@ async function fetchandPlotHomeOwnershiploanstatusCountPlot(){
   console.log(loanchargedoffthirdslab);
   // Prepare the data for the chart
   const data = {
-    labels: ['Loan Paid Off & Ownership(1)', 'Loan Paid Off & Ownership(2)', 'Loan Paid Off & Ownership(3)', 'Loan Charged Off & Ownership(1)', 'Loan Charged Off & Ownership(2)', 'Loan Charged Off & Ownership(3)'],
+    labels: ['Loan Paid Off & Ownership(Home Mortgage)', 'Loan Paid Off & Ownership(Rent)', 'Loan Paid Off & Ownership(Own Home)', 'Loan Charged Off & Ownership(Home Mortgage)', 'Loan Charged Off & Ownership(Rent)', 'Loan Charged Off & Ownership(Own Home)'],
     datasets: [{
       label: 'Count',
       data: [loanpaidfirstslab, loanpaidoffsecondslab, loanpaidoffthirdslab, loanchargedofffirstslab, loanchargedoffsecondslab, loanchargedoffthirdslab],
@@ -174,7 +174,7 @@ async function fetchAndPlotCreditScoreCountPlot(){
   console.log(loanchargedoffthirdslab);
   // Prepare the data for the chart
   const data = {
-    labels: ['Loan Paid Off 1', 'Loan Paid Off 2', 'Loan Paid Off 3', 'Loan Charged Off 1', 'Loan Charged Off 2', 'Loan Charged Off 3'],
+    labels: ['Loan Paid Off & Credit Range(580-670)', 'Loan Paid Off & Credit Range(670-740)', 'Loan Paid Off & Credit Range(740-800)', 'Loan Charged Off & Credit Range(580-670)', 'Loan Charged Off & Credit Range(670-740)', 'Loan Charged Off & Credit Range(740-800)'],
     datasets: [{
       label: 'Count',
       data: [loanpaidfirstslab, loanpaidoffsecondslab, loanpaidoffthirdslab, loanchargedofffirstslab, loanchargedoffsecondslab, loanchargedoffthirdslab],
@@ -302,7 +302,8 @@ async function fetchDataandplot() {
       creditScoreData.push(data1.creditranges);
       monthlydebtData.push(data1.debt);
       predictedLoanStatusData.push(data1.predictedloanstatus);
-
+      console.log(typeof creditScoreData[0]);
+      console.log(typeof monthlydebtData[0])
       // Create a new Chart object
       const myChart = new Chart(ctx, {
           type: 'scatter',
@@ -312,20 +313,20 @@ async function fetchDataandplot() {
                   data: creditScoreData.map((value, index) => ({x: value, y: monthlydebtData[index]})),
                   backgroundColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255, 99, 132, 20)' : 'rgba(54, 162, 235, 0.2)'),
                   borderColor: predictedLoanStatusData.map(value => value === 0 ? 'rgba(255,99,132,10)' : 'rgba(54, 162, 235, 1)'),
-                  borderWidth: 1
+                  borderWidth: 3.5
               }]
           },
           options: {
               scales: {
-                  xAxes: [{
+                  x: [{
                       type: 'linear',
-                      position: 'bottom',
+                     // position: 'bottom',
                       scaleLabel: {
-                          display: true,
+                          display:true,
                           labelString: 'Credit Score'
                       }
                   }],
-                  yAxes: [{
+                  y: [{
                       type: 'linear',
                       scaleLabel: {
                           display: true,
