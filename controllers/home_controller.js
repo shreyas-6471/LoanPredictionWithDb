@@ -1,6 +1,3 @@
-//const Post=require('../models/post');
-//const Comment=require('../models/comment');
-//const User=require('../models/user');
 const { PythonShell } = require('python-shell');
 const XLSX = require('xlsx');
 const multer = require('multer');
