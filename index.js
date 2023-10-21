@@ -3,6 +3,7 @@ const express=require('express');
 const cookieParser=require('cookie-parser');
 const bodyParser = require('body-parser');
 const app=express();
+const cors = require('cors'); 
 //flash = require('express-flash')
 const expressLayouts=require('express-ejs-layouts');
 const { default: mongoose } = require('mongoose');
@@ -30,6 +31,7 @@ const port=8001;
     prefix:'/css'
 
 }));*/
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.urlencoded());
@@ -79,7 +81,9 @@ async function connect(){
 connect();
 app.use('/',require('./routes'));
 app.use(flash());
+
 app.listen(port,function(err)
+
 {
     if(err)
     {
